@@ -1,41 +1,35 @@
-import java.util.*;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Semaphore;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainClass {
-    public static final int CARS_COUNT = 4;
-
-    public static void main(String[] args) {
-        CyclicBarrier cbr = new CyclicBarrier(CARS_COUNT, () -> System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка началась!!!"));
-        Semaphore smp = new Semaphore(2);
-        CyclicBarrier cbr1 = new CyclicBarrier(CARS_COUNT, () -> System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка закончилась!!!"));
-        System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Подготовка!!!");
 
 
-
-
-        Race race = new Race(new Road(60), new Tunnel(smp), new Road(40));
-
-        Car[] cars = new Car[CARS_COUNT];
-
-        for (int i = 0; i < cars.length; i++) {
-
-
-
-            cars[i] = new Car( cbr,cbr1, race, 20 + (int) (Math.random() * 10));
-
+    public static int[] first(int[] arr) throws RuntimeException {
+        int n = 0;
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for (int a: arr) {
+            arrayList.add(a);
         }
-        for (int i = 0; i < cars.length; i++) {
-
-            new Thread(cars[i]).start();
-
+        if (arrayList.indexOf(4) != -1) {
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i] == 4) n = i;
+            }
+            int[] arr1 = new int[arr.length - n - 1];
+            System.arraycopy(arr, n + 1, arr1, 0, arr1.length);
+            return arr1;
+        } else {
+            throw new RuntimeException("нет 4");
         }
-
-
-
-
     }
 
+    public boolean second(int[] arr){
+        boolean i1 = false, i4 = false;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 1) i1 = true;
+            else if (arr[i] == 4) i4 = true;
+            else return false;
+        }
+        return i1 && i4;
+    }
 }
+
